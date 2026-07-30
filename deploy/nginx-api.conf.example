@@ -1,0 +1,45 @@
+# Example nginx vhost for the Laravel API (apps/api/public).
+# Replace api.owuf.gov.et and the root path for your server.
+
+server {
+    listen 443 ssl http2;
+    server_name api.owuf.gov.et;
+
+    root /var/www/owuf/apps/api/public;
+    index index.php;
+
+    # ssl_certificate     /etc/letsencrypt/live/api.owuf.gov.et/fullchain.pem;
+    # ssl_certificate_key /etc/letsencrypt/live/api.owuf.gov.et/privkey.pem;
+
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    client_max_body_size 32M;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location /storage {
+        alias /var/www/owuf/apps/api/storage/app/public;
+        access_log off;
+        expires 30d;
+    }
+
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_read_timeout 120;
+    }
+
+    location ~ /\.(?!well-known) {
+        deny all;
+    }
+}
+
+server {
+    listen 80;
+    server_name api.owuf.gov.et;
+    return 301 https://$host$request_uri;
+}

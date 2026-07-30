@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm run lint --if-present
+      - run: npm test
+      - name: Production build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://owuf.gov.et
+          NEXT_PUBLIC_API_URL: https://api.owuf.gov.et
+        run: npm run build
+
+  api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          extensions: mbstring, openssl, pdo_sqlite, tokenizer, xml, ctype, json, bcmath, fileinfo
+          coverage: none
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      - name: Prepare environment
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+          php artisan jwt:secret --force
+          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+          sed -i 's/^DB_HOST=.*/# DB_HOST=/' .env
+          sed -i 's/^DB_PORT=.*/# DB_PORT=/' .env
+          sed -i 's/^DB_DATABASE=.*/# DB_DATABASE=/' .env
+          sed -i 's/^DB_USERNAME=.*/# DB_USERNAME=/' .env
+          sed -i 's/^DB_PASSWORD=.*/# DB_PASSWORD=/' .env
+          mkdir -p database
+          touch database/database.sqlite
+      - name: Migrate
+        run: php artisan migrate --force
+      - name: Feature tests
+        run: php artisan test --without-tty
+      - name: Framework checks
+        run: |
+          php artisan about
+          php artisan route:list --columns=method,uri,name --json > /dev/null
+          php artisan config:cache
+          php artisan route:cache

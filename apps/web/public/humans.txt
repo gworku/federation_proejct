@@ -1,0 +1,11 @@
+/* TEAM */
+Organization: Oromia Water Utilities Federation (OWUF)
+Contact: info@owuf.gov.et
+Location: Finfinnee / Addis Ababa, Oromia, Ethiopia
+
+/* SITE */
+Standards: HTML5, WCAG 2.1 AA (target), Schema.org
+Languages: English, Afaan Oromo, Amharic
+Platform: Next.js + Django REST
+Legal: Proclamation No. 228/2020
+Strategic plan: 2026-2030

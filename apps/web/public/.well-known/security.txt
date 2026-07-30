@@ -1,0 +1,5 @@
+Contact: mailto:info@owuf.gov.et
+Preferred-Languages: en, om, am
+Canonical: https://owuf.gov.et/.well-known/security.txt
+Policy: https://owuf.gov.et/en/privacy
+Expires: 2027-12-31T23:59:59.000Z
