@@ -142,6 +142,9 @@ TRUSTED_PROXIES=10.0.0.0/8,172.16.0.0/12   # production: explicit CIDRs, not *
 JWT_SECRET=...      # from jwt:secret
 ```
 
+> For Render free deployments, provision an external MySQL database such as Aiven free tier. Render free web services do not include a hosted database.
+> Use `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and optionally `MYSQL_ATTR_SSL_CA` for secure managed MySQL access.
+
 More detail: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md), [`docs/SECURITY.md`](docs/SECURITY.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/API.md`](docs/API.md).
 
 Serve `apps/api/public` via nginx/Apache + PHP-FPM 8.3+ (see `deploy/nginx-api.conf.example`). Health checks: `/up` and `/api/health`.

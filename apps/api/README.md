@@ -34,12 +34,13 @@ Health: `GET http://127.0.0.1:8000/api/health`
 ## Production
 
 ```bash
-# Configure .env (APP_ENV=production, APP_DEBUG=false, MySQL, CORS, JWT_SECRET)
+# Configure .env (APP_ENV=production, APP_DEBUG=false, MySQL, CORS, APP_KEY, JWT_SECRET)
 php artisan migrate --force
 php artisan app:deploy-prepare
 php artisan app:create-admin admin@owuf.gov.et --name="OWUF Admin"
 ```
 
+- For Render free deployment, use an external MySQL service such as Aiven free tier. Render web services do not include a managed database.
 - Document root: `public/`
 - nginx example: `../../deploy/nginx-api.conf.example`
 - Deploy script: `../../deploy/deploy-api.sh`

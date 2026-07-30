@@ -1,0 +1,11 @@
+vendor
+node_modules
+.env
+.env.*
+.git
+.gitignore
+npm-debug.log*
+yarn-error.log*
+docker-compose*.yml
+.DS_Store
+*.log

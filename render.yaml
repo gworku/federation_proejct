@@ -41,9 +41,25 @@ services:
         value: warning
       - key: SESSION_SECURE_COOKIE
         value: true
+      - key: APP_KEY
+        generateValue: true
       - key: DB_CONNECTION
-        value: sqlite
+        value: mysql
+      - key: DB_HOST
+        value: <YOUR_MYSQL_HOST>
+      - key: DB_PORT
+        value: "3306"
       - key: DB_DATABASE
-        value: /tmp/owuf.sqlite
+        value: <YOUR_DATABASE>
+      - key: DB_USERNAME
+        value: <YOUR_DB_USER>
+      - key: DB_PASSWORD
+        value: <YOUR_DB_PASSWORD>
+      - key: DB_CHARSET
+        value: utf8mb4
+      - key: DB_COLLATION
+        value: utf8mb4_unicode_ci
+      - key: MYSQL_ATTR_SSL_CA
+        value: /etc/ssl/certs/ca.pem
       - key: JWT_SECRET
         generateValue: true

@@ -41,6 +41,8 @@ Nginx sample: `deploy/nginx-web.conf.example`
 
 **API:** `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL`, `JWT_SECRET`, MySQL, `CORS_ALLOWED_ORIGINS`, `FRONTEND_URL`, `TRUSTED_PROXIES` (CIDRs), mail settings for password reset.
 
+> Render free web services cannot host a managed database. Provision an external MySQL instance (for example, Aiven free tier) and connect it with `DB_HOST`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, and optionally `MYSQL_ATTR_SSL_CA`.
+
 **Web:** `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_API_URL`
 
 ## Health checks
