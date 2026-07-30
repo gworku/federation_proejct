@@ -2,7 +2,9 @@ FROM php:8.3-apache-bookworm
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git unzip libzip-dev libpng-dev libonig-dev libsqlite3-dev sqlite3 \
-    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip bcmath \
+    libfreetype6-dev libjpeg62-turbo-dev libwebp-dev libxpm-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
+    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip bcmath gd \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite headers
 
