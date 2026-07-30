@@ -147,6 +147,8 @@ JWT_SECRET=...      # from jwt:secret
 
 More detail: [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md), [`docs/SECURITY.md`](docs/SECURITY.md), [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md), [`docs/API.md`](docs/API.md).
 
+For Render free deploys, use `render.yaml` or the Render dashboard and connect the API to an external MySQL provider such as Aiven free tier. Keep `APP_KEY` and `JWT_SECRET` generated, and use production URLs for `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_SITE_URL`.
+
 Serve `apps/api/public` via nginx/Apache + PHP-FPM 8.3+ (see `deploy/nginx-api.conf.example`). Health checks: `/up` and `/api/health`.
 
 **Never** run `migrate:fresh`, `db:seed`, or `app:seed-demo` in production. Demo seeding is blocked when `APP_ENV=production`.
